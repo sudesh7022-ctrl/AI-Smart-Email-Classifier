@@ -3,7 +3,6 @@ from pydantic import BaseModel
 import joblib
 import os
 
-# App initialization
 app = FastAPI(title="AI Email Classifier Service", version="1.0.0")
 
 class EmailRequest(BaseModel):
@@ -49,3 +48,13 @@ def predict_email(request: EmailRequest):
 @app.get("/health")
 def health_check():
     return {"status": "up"}
+
+@app.get("/")
+def root():
+    return {
+        "message": "AI Email Classifier API is running!",
+        "endpoints": {
+            "predict": "POST /predict",
+            "health": "GET /health"
+        }
+    }

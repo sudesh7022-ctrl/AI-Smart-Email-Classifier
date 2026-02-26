@@ -18,15 +18,15 @@ def train():
     # Split the dataset
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
-    # Initialize and fit TF-IDF vectorizer
+    # Initialize and fit TF-IDF vectorizer (removed stop_words to preserve multi-lingual integer/action-word context)
     print("Vectorizing text...")
-    vectorizer = TfidfVectorizer(stop_words='english', max_features=5000)
+    vectorizer = TfidfVectorizer(max_features=5000, ngram_range=(1, 2))
     X_train_vec = vectorizer.fit_transform(X_train)
     X_test_vec = vectorizer.transform(X_test)
     
-    # Initialize and train the internal model
+    # Initialize and train the internal model with reduced smoothing to trust our small dataset more
     print("Training Naive Bayes model...")
-    model = MultinomialNB()
+    model = MultinomialNB(alpha=0.1)
     model.fit(X_train_vec, y_train)
     
     # Evaluate accuracy

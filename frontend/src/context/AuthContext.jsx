@@ -3,17 +3,12 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
-
-    useEffect(() => {
+    const [user, setUser] = useState(() => {
         const token = localStorage.getItem('token');
         const username = localStorage.getItem('username');
         const role = localStorage.getItem('role');
-
-        if (token && username) {
-            setUser({ username, role });
-        }
-    }, []);
+        return (token && username) ? { username, role } : null;
+    });
 
     const login = (data) => {
         localStorage.setItem('token', data.token);
