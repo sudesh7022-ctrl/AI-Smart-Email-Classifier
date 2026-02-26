@@ -33,13 +33,17 @@ const Register = () => {
     };
 
     return (
-        <div className="flex-center animate-fade-in">
-            <div className="glass-panel" style={{ width: '100%', maxWidth: '400px' }}>
-                <h2 className="text-center mb-4">Create Account</h2>
-                {error && <div className="error-message">{error}</div>}
-                {success && <div className="success-message">{success}</div>}
+        <div className="flex-center">
+            <div className="glass-panel animate-slide-up" style={{ width: '100%', maxWidth: '440px', padding: '3rem 2.5rem' }}>
+                <div className="text-center mb-4 stagger-1">
+                    <h2 className="gradient-text" style={{ fontSize: '2rem' }}>Create Account</h2>
+                    <p className="subtitle mt-1">Join us to start classifying</p>
+                </div>
 
-                <form onSubmit={handleSubmit}>
+                {error && <div className="error-message stagger-2">{error}</div>}
+                {success && <div className="success-message stagger-2">{success}</div>}
+
+                <form onSubmit={handleSubmit} className="stagger-3">
                     <div className="form-group">
                         <label className="form-label">Username</label>
                         <input
@@ -77,13 +81,13 @@ const Register = () => {
                         />
                     </div>
 
-                    <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={loading}>
+                    <button type="submit" className="btn btn-primary animate-pulse-glow" style={{ width: '100%', marginTop: '0.5rem' }} disabled={loading}>
                         {loading ? 'Registering...' : 'Sign Up'}
                     </button>
                 </form>
 
-                <div className="text-center mt-4" style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                    Already have an account? <Link to="/login" style={{ color: 'var(--primary)', textDecoration: 'none' }}>Login here</Link>
+                <div className="text-center mt-4 stagger-4" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>
+                    Already have an account? <Link to="/login" style={{ color: 'var(--accent-blue)', textDecoration: 'none', fontWeight: '600', marginLeft: '0.25rem' }}>Login here</Link>
                 </div>
             </div>
         </div>

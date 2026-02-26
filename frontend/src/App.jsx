@@ -20,8 +20,8 @@ const Navigation = () => {
   const { user, logout } = useAuth();
 
   return (
-    <nav>
-      <Link to="/" className="nav-brand">Smart Classifier</Link>
+    <nav className="animate-fade-in">
+      <Link to="/" className="nav-brand gradient-text" style={{ paddingLeft: '0.5rem' }}>Smart Classifier</Link>
       <div className="nav-links">
         {user ? (
           <>
@@ -30,12 +30,12 @@ const Navigation = () => {
             {user.role === 'ROLE_ADMIN' && (
               <Link to="/admin" className="nav-link">Admin</Link>
             )}
-            <button onClick={logout} className="btn btn-danger" style={{ padding: '0.4rem 1rem', fontSize: '0.9rem' }}>Logout</button>
+            <button onClick={logout} className="btn btn-danger" style={{ padding: '0.4rem 1.25rem', fontSize: '0.9rem', borderRadius: '50px' }}>Logout</button>
           </>
         ) : (
           <>
             <Link to="/login" className="nav-link">Login</Link>
-            <Link to="/register" className="nav-link">Register</Link>
+            <Link to="/register" className="btn btn-primary" style={{ padding: '0.4rem 1.25rem', fontSize: '0.9rem', borderRadius: '50px' }}>Register</Link>
           </>
         )}
       </div>

@@ -29,12 +29,16 @@ const Login = () => {
     };
 
     return (
-        <div className="flex-center animate-fade-in">
-            <div className="glass-panel" style={{ width: '100%', maxWidth: '400px' }}>
-                <h2 className="text-center mb-4">Welcome Back</h2>
-                {error && <div className="error-message">{error}</div>}
+        <div className="flex-center">
+            <div className="glass-panel animate-slide-up" style={{ width: '100%', maxWidth: '420px', padding: '3rem 2.5rem' }}>
+                <div className="text-center mb-4 stagger-1">
+                    <h2 className="gradient-text" style={{ fontSize: '2rem' }}>Welcome Back</h2>
+                    <p className="subtitle mt-1">Sign in to your account</p>
+                </div>
 
-                <form onSubmit={handleSubmit}>
+                {error && <div className="error-message stagger-2">{error}</div>}
+
+                <form onSubmit={handleSubmit} className="stagger-3">
                     <div className="form-group">
                         <label className="form-label">Username</label>
                         <input
@@ -59,13 +63,13 @@ const Login = () => {
                         />
                     </div>
 
-                    <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={loading}>
+                    <button type="submit" className="btn btn-primary animate-pulse-glow" style={{ width: '100%', marginTop: '0.5rem' }} disabled={loading}>
                         {loading ? 'Authenticating...' : 'Sign In'}
                     </button>
                 </form>
 
-                <div className="text-center mt-4" style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                    Don't have an account? <Link to="/register" style={{ color: 'var(--primary)', textDecoration: 'none' }}>Register here</Link>
+                <div className="text-center mt-4 stagger-4" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>
+                    Don't have an account? <Link to="/register" style={{ color: 'var(--accent-blue)', textDecoration: 'none', fontWeight: '600', marginLeft: '0.25rem' }}>Register here</Link>
                 </div>
             </div>
         </div>
