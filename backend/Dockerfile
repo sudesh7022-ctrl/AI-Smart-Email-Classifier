@@ -1,5 +1,5 @@
-# Use an official OpenJDK runtime as a parent image
-FROM openjdk:17-jdk-slim
+# Use Eclipse Temurin as it is the official successor for openjdk on Docker
+FROM eclipse-temurin:17-jdk-jammy
 
 # Set the working directory in the container
 WORKDIR /app
