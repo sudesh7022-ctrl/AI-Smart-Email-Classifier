@@ -60,9 +60,13 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // Setup simple CORS for frontend running locally
-        configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:5174",
-                "http://localhost:5175", "http://localhost:3000"));
+        // Setup simple CORS for frontend running locally and deployed on Vercel
+        configuration.setAllowedOrigins(List.of(
+                "http://localhost:5173",
+                "http://localhost:5174",
+                "http://localhost:5175",
+                "http://localhost:3000",
+                "https://ai-smart-email-classifier.vercel.app"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
