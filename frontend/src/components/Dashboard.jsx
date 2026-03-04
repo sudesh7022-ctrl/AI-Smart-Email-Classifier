@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import axios from 'axios';
+import api from '../utils/api';
 
 const Dashboard = () => {
     const { user } = useAuth();
@@ -11,10 +11,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const token = localStorage.getItem('token');
-                const response = await axios.get('http://localhost:8080/api/user/profile', {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+                const response = await api.get('/user/profile');
                 setProfile(response.data);
             } catch (err) {
                 setError('Failed to load profile data.');

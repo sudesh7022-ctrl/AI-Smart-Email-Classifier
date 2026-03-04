@@ -71,7 +71,7 @@ const Login = () => {
                     </div>
 
                     <a
-                        href={`${import.meta.env.VITE_API_URL || 'http://localhost:8080/api'}/oauth2/authorization/google`.replace('/api/oauth2', '/oauth2')}
+                        href={`${import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || 'http://localhost:8080/api'}/oauth2/authorization/google`.replace('/api/oauth2', '/oauth2')}
                         className="btn"
                         style={{
                             width: '100%',

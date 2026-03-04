@@ -17,7 +17,9 @@ const LiveChatWidget = () => {
         if (!user) return;
 
         const connectWebSocket = () => {
-            const socket = new SockJS('http://localhost:8080/ws');
+            const baseUrl = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
+            const wsUrl = baseUrl.replace('/api', '/ws');
+            const socket = new SockJS(wsUrl);
             const client = new Client({
                 webSocketFactory: () => socket,
                 debug: function (str) {

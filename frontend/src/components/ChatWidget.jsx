@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import './ChatWidget.css'; // We will create this
 
 const ChatWidget = () => {
@@ -22,11 +22,7 @@ const ChatWidget = () => {
 
         setStatus('sending');
         try {
-            const token = localStorage.getItem('token');
-            await axios.post('http://localhost:8080/api/contact/support',
-                { message },
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+            await api.post('/contact/support', { message });
             setStatus('success');
             setTimeout(() => {
                 setIsOpen(false);
