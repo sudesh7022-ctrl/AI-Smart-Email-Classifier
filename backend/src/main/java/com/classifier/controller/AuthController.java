@@ -45,6 +45,9 @@ public class AuthController {
     @Autowired
     private JavaMailSender mailSender;
 
+    @org.springframework.beans.factory.annotation.Value("${app.frontend.url}")
+    private String frontendUrl;
+
     public record ForgotPasswordRequest(String email) {
     }
 
@@ -109,7 +112,7 @@ public class AuthController {
         passwordResetTokenRepository.save(resetToken);
 
         // Send Email
-        String resetUrl = "http://localhost:5173/reset-password?token=" + token;
+        String resetUrl = frontendUrl + "/reset-password?token=" + token;
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(user.getEmail());
         message.setSubject("Password Reset Request");
