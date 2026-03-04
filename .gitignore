@@ -1,0 +1,35 @@
+# Java / Maven
+target/
+*.class
+
+# Node / React
+node_modules/
+dist/
+.env
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+env/
+.env/
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+*.iws
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Database
+backend/data/*.db
+backend/data/*.trace.db
+backend/data/*.mv.db
+backend/data/*lock.db
+
+# Log files
+*.log

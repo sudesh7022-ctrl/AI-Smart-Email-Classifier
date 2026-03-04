@@ -24,10 +24,14 @@ public class EmailLog {
     @Column(nullable = false)
     private Double confidence;
 
+    @Column(nullable = true)
+    private String userCorrection;
+
     @Column(nullable = false)
     private LocalDateTime timestamp;
 
-    public EmailLog() {}
+    public EmailLog() {
+    }
 
     public EmailLog(User user, String emailText, String prediction, Double confidence) {
         this.user = user;
@@ -38,21 +42,59 @@ public class EmailLog {
     }
 
     // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getEmailText() { return emailText; }
-    public void setEmailText(String emailText) { this.emailText = emailText; }
+    public User getUser() {
+        return user;
+    }
 
-    public String getPrediction() { return prediction; }
-    public void setPrediction(String prediction) { this.prediction = prediction; }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-    public Double getConfidence() { return confidence; }
-    public void setConfidence(Double confidence) { this.confidence = confidence; }
+    public String getEmailText() {
+        return emailText;
+    }
 
-    public LocalDateTime getTimestamp() { return timestamp; }
-    public void setTimestamp(LocalDateTime timestamp) { this.timestamp = timestamp; }
+    public void setEmailText(String emailText) {
+        this.emailText = emailText;
+    }
+
+    public String getPrediction() {
+        return prediction;
+    }
+
+    public void setPrediction(String prediction) {
+        this.prediction = prediction;
+    }
+
+    public Double getConfidence() {
+        return confidence;
+    }
+
+    public void setConfidence(Double confidence) {
+        this.confidence = confidence;
+    }
+
+    public String getUserCorrection() {
+        return userCorrection;
+    }
+
+    public void setUserCorrection(String userCorrection) {
+        this.userCorrection = userCorrection;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
 }

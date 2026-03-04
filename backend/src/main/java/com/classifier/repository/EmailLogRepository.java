@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface EmailLogRepository extends JpaRepository<EmailLog, Long> {
     List<EmailLog> findByUserIdOrderByTimestampDesc(Long userId);
+
+    long countByUserId(Long userId);
 }

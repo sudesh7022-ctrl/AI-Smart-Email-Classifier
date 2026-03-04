@@ -42,9 +42,37 @@ public class EmailController {
 
         // Save prediction result to DB
         EmailLog emailLog = new EmailLog(user, request.getText(), response.getCategory(), response.getConfidence());
-        emailLogRepository.save(emailLog);
+        emailLog = emailLogRepository.save(emailLog);
+
+        // Inject the Database ID into the response before sending to frontend
+        response.setId(emailLog.getId());
 
         return ResponseEntity.ok(response);
+    }
+
+    public record FeedbackRequest(String correctedCategory) {
+    }
+
+    @PostMapping("/{id}/feedback")
+    public ResponseEntity<?> provideFeedback(@PathVariable Long id, @RequestBody FeedbackRequest request) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findByUsername(userDetails.getUsername()).get();
+
+        EmailLog emailLog = emailLogRepository.findById(id).orElse(null);
+
+        if (emailLog == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Ensure user owns this log
+        if (!emailLog.getUser().getId().equals(user.getId())) {
+            return ResponseEntity.status(403).body("Unauthorized to modify this record.");
+        }
+
+        emailLog.setUserCorrection(request.correctedCategory());
+        emailLogRepository.save(emailLog);
+
+        return ResponseEntity.ok("Feedback saved successfully.");
     }
 
     @GetMapping("/history")

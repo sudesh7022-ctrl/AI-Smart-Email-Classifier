@@ -21,8 +21,14 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false)
+    @Column
     private String password;
+
+    @Column
+    private String provider; // e.g., "LOCAL", "GOOGLE"
+
+    @Column
+    private String providerId;
 
     @Column(nullable = false)
     private String role; // e.g., "ROLE_USER" or "ROLE_ADMIN"
@@ -49,6 +55,12 @@ public class User implements UserDetails {
 
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
+
+    public String getProvider() { return provider; }
+    public void setProvider(String provider) { this.provider = provider; }
+
+    public String getProviderId() { return providerId; }
+    public void setProviderId(String providerId) { this.providerId = providerId; }
 
     // UserDetails implementation
     @Override

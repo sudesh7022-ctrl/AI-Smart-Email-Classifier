@@ -6,6 +6,10 @@ const History = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
+    // Filtering and Sorting States
+    const [filterCategory, setFilterCategory] = useState('All');
+    const [sortBy, setSortBy] = useState('Newest');
+
     useEffect(() => {
         fetchHistory();
     }, []);
@@ -36,30 +40,89 @@ const History = () => {
         });
     };
 
+    // Derived state for filtering and sorting
+    const getFilteredHistory = () => {
+        let filtered = [...history];
+
+        // 1. Filter
+        if (filterCategory !== 'All') {
+            filtered = filtered.filter(item =>
+                item.prediction.toLowerCase() === filterCategory.toLowerCase()
+            );
+        }
+
+        // 2. Sort
+        filtered.sort((a, b) => {
+            if (sortBy === 'Newest') {
+                return new Date(b.timestamp) - new Date(a.timestamp);
+            } else if (sortBy === 'Oldest') {
+                return new Date(a.timestamp) - new Date(b.timestamp);
+            } else if (sortBy === 'Highest Confidence') {
+                return b.confidence - a.confidence;
+            } else if (sortBy === 'Lowest Confidence') {
+                return a.confidence - b.confidence;
+            }
+            return 0;
+        });
+
+        return filtered;
+    };
+
+    const displayedHistory = getFilteredHistory();
+
     return (
-        <div className="animate-slide-up stagger-1" style={{ padding: '2rem 1rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem', borderBottom: '1px solid var(--glass-border)', paddingBottom: '1rem' }}>
-                <h2 className="gradient-text" style={{ fontSize: '2.2rem' }}>Classification History</h2>
-                <span className="badge" style={{ background: 'rgba(59, 130, 246, 0.2)', color: 'var(--accent-blue)', border: '1px solid rgba(59, 130, 246, 0.4)' }}>
-                    {history.length} records found
-                </span>
+        <div className="animate-fade-in" style={{ padding: '2rem 0' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+                <h2>Classification History</h2>
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                    <div className="form-group" style={{ marginBottom: 0 }}>
+                        <select
+                            className="form-input"
+                            style={{ padding: '0.5rem', width: 'auto' }}
+                            value={filterCategory}
+                            onChange={e => setFilterCategory(e.target.value)}
+                        >
+                            <option value="All">All Categories</option>
+                            <option value="Normal">Normal</option>
+                            <option value="Important">Important</option>
+                            <option value="Spam">Spam</option>
+                        </select>
+                    </div>
+                    <div className="form-group" style={{ marginBottom: 0 }}>
+                        <select
+                            className="form-input"
+                            style={{ padding: '0.5rem', width: 'auto' }}
+                            value={sortBy}
+                            onChange={e => setSortBy(e.target.value)}
+                        >
+                            <option value="Newest">Newest First</option>
+                            <option value="Oldest">Oldest First</option>
+                            <option value="Highest Confidence">Highest Confidence</option>
+                            <option value="Lowest Confidence">Lowest Confidence</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
-            {error && <div className="error-message animate-slide-up stagger-2">{error}</div>}
+            <div style={{ marginBottom: '2rem', color: 'var(--text-muted)' }}>
+                Showing {displayedHistory.length} of {history.length} records.
+            </div>
+
+            {error && <div className="error-message">{error}</div>}
 
             {loading ? (
-                <div className="text-center animate-pulse" style={{ padding: '4rem', color: 'var(--text-secondary)', fontSize: '1.1rem' }}>
+                <div className="text-center" style={{ padding: '3rem', color: 'var(--text-muted)' }}>
                     Loading your history...
                 </div>
             ) : history.length === 0 ? (
-                <div className="glass-panel text-center animate-slide-up stagger-2" style={{ padding: '5rem 2rem' }}>
-                    <h3 style={{ color: 'var(--text-secondary)', marginBottom: '1rem', fontSize: '1.5rem' }}>No classifications yet</h3>
-                    <p style={{ color: 'var(--text-primary)' }}>Head over to the Classify tab to analyze your first email.</p>
+                <div className="glass-panel text-center" style={{ padding: '4rem 2rem' }}>
+                    <h3 style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>No classifications yet</h3>
+                    <p>No records match your filters, or you haven't classified anything yet.</p>
                 </div>
             ) : (
                 <div className="grid grid-cols-2">
-                    {history.map((item, index) => (
-                        <div key={item.id} className={`history-card animate-slide-up stagger-${(index % 4) + 1}`}>
+                    {displayedHistory.map((item) => (
+                        <div key={item.id} className="history-card">
                             <div className="history-header">
                                 <span className={`badge ${getBadgeClass(item.prediction)}`}>
                                     {item.prediction}
@@ -68,15 +131,14 @@ const History = () => {
                             </div>
 
                             <div className="history-text">
-                                "{item.emailText}"
+                                {item.emailText}
                             </div>
 
                             <div className="history-footer">
-                                <span>Confidence Score</span>
+                                <span>Confidence:</span>
                                 <span style={{
                                     color: item.confidence > 0.8 ? 'var(--success)' : item.confidence > 0.5 ? 'var(--warning)' : 'var(--danger)',
-                                    fontWeight: '800',
-                                    fontSize: '1.1rem'
+                                    fontWeight: 'bold'
                                 }}>
                                     {(item.confidence * 100).toFixed(1)}%
                                 </span>

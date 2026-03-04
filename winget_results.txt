@@ -1,0 +1,10 @@
+﻿
+   - 
+                                                                                                                        
+Name                   Id                      Version   Match       Source
+---------------------------------------------------------------------------
+Podman                 RedHat.Podman           5.8.0     Tag: redhat winget
+OpenShift Client       RedHat.OpenShift-Client 4.19.10               winget
+Podman Desktop         RedHat.Podman-Desktop   1.25.1                winget
+Virtio-win-guest-tools RedHat.VirtIO           0.1.285-1             winget
+VirtViewer             RedHat.VirtViewer       11.0.256              winget
